@@ -133,7 +133,19 @@ GREEN
 ```
 **when 에 아무 인자도 없으려면 각 분기의 조건이 불리언 결과를 계산하는 식어야 한다.**              
        
-## 스마트 캐스트: 타입 검사와 타입 캐스트를 조합          
+## 스마트 캐스트: 타입 검사와 타입 캐스트를 조합   
+   
+```kt
+interface Expr
+class Num(val value: Int): Expr                    // Expr 인터페이스 구현 및 value 프로퍼티만 존재하는 단순한 클래스    
+class Sum(val left: Expr, val right: Expr): Expr   // Expr 인터페이스 구현 및 left 및 right 프로퍼티가 존재하는 클래스    
+```  
+`(1 + 2) + 4`라는 식을 저장하고자 하면 `Sum(Sum(Num(1), Num(2)), Num(4))` 라는 구조의 객체가 생긴다.      
+
+
+
+
+
 
 
 
