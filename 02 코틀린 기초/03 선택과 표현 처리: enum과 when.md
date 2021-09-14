@@ -213,27 +213,7 @@ fun eval(e: Expr): Int =
         else -> throw IllegalArgumentException("Unknown expression")     
     }
 ```
-`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.      
 
 
 
