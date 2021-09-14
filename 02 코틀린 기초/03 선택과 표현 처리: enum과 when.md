@@ -95,8 +95,8 @@ fun mix(c1: Color, c2: Color) = when(setOf(c1, c2)) {
 >>> println(mix(BLUE, YELLOW))
 GREEN
 ```
-우선 이해를 하기 위해서 `setOf()`에 대해서 알 필요가 있다.      
-`setOf()`은 코틀린  
+우선 이해를 하기 위해서 `setOf()`에 대해서 알 필요가 있다.        
+`setOf()`은 코틀린 표준 라이브러리에서 인자로 전달받은  
 
 
 
