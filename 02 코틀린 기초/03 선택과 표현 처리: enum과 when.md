@@ -82,6 +82,23 @@ fun getWarmth(color: Color) = when(color) {
 참고로, 상수 상수 값을 `import`하면 자바의 `static import` 처럼 코드를 더 간결히 만들 수 있다.   
 
 ## when과 임의의 객체를 함께 사용 
+분기 조건에 상수만을 사용할 수 있는 자바의 switch와 달리,     
+**코틀린의 when의 분기 조건은 임의의 객체를 허용한다.**     
+
+```kt
+fun mix(c1: Color, c2: Color) = when(setOf(c1, c2)) {
+    setOf(RED, YELLOW) -> ORANGE
+    setOf(YELLOW, BLUE) -> GREEN
+    setOf(BLUE, VIOLET) -> INDIGO
+    else -> throw Exception("Dirty color")
+    }
+>>> println(mix(BLUE, YELLOW))
+GREEN
+```
+우선 이해를 하기 위해서 `setOf()`에 대해서 알 필요가 있다.      
+`setOf()`은 코틀린  
+
+
 
 
 
