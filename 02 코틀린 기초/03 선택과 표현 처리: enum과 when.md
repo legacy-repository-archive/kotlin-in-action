@@ -132,6 +132,8 @@ fun mixOptimized(cl: Color, c2: Color) = when {
 GREEN
 ```
 **when 에 아무 인자도 없으려면 각 분기의 조건이 불리언 결과를 계산하는 식어야 한다.**              
+       
+## 스마트 캐스트: 타입 검사와 타입 캐스트를 조합          
 
 
 
