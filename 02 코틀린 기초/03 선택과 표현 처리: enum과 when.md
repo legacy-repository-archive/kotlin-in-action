@@ -131,7 +131,8 @@ fun mixOptimized(cl: Color, c2: Color) = when {
 >>> println(mixOptimized(BLUE, YELLOW)
 GREEN
 ```
-**when**에 아무 인자도 없으려면 각 분기의 조건이 불리언 결과를 계산하는 식어야 한다.        
+**when 에 아무 인자도 없으려면 각 분기의 조건이 불리언 결과를 계산하는 식어야 한다.**              
+
 
 
 
