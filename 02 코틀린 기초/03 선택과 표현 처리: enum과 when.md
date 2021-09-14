@@ -161,6 +161,8 @@ fun eval(e: Expr): Int {
 }
 >>> println(eval(Sum(Sum(Num(1), Num(2)), Num(4))))
 ```
+**코틀린에서는 is를 사용해 변수 타입을 검사한다.(instanceof)**         
+
 
 
 
