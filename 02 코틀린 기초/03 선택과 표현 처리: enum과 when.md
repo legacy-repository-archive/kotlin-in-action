@@ -187,6 +187,42 @@ val n = e as Num
 원하는 타입으로 **명시적으로 타입 캐스팅을 하려면 `as` 키워드를 사용한다.**
 
 ## 리팩토링: if를 when으로 변경   
+코틀린의 if는 문이 아니라 식이다.   
+그렇기 때문에 3항 연산식이 없으며 계산 결과값을 사용할 일이 없으면 사용을 고민해봐야한다.   
+    
+```kt
+fun eval(e: Exper): Int = 
+    if(e is Num) {
+        e.value
+    } else if(e is Sum) {
+        eval(e.right) + eval(e.left)
+    } else {
+        throw IllegalArgument("Unknown expression")
+    }
+>>> println(eval(Sum(Num(1), Num(2)))
+3
+```  
+if분기에 식이 하나밖에 없다면 중괄호를 생략해도 된다.          
+if분기에 블록을 사용하는 경우 그 불록의 마지막 식이 그 분기의 결과 값이다.   
+
+```kt
+fun eval(e: Expr): Int = 
+    when (e) {       
+        is Num -> e.value       
+        is Num -> eval(e.right) + eval(e.left)        
+        else -> throw IllegalArgumentException("Unknown expression")     
+    }
+```
+`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.     
+
+
+
+
+
+
+
+
+
 
 
 
