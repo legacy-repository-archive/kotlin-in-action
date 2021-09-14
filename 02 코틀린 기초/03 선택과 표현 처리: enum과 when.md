@@ -105,8 +105,43 @@ when 식은 인자 값과 매치하는 조건 값을 찾을 때까지 각 분기
 모든 분기 식에서 만족하는 조건을 찾을 수 없다면 else 분기의 문장을 계산한다.      
 **when의 분기 조건 부분에 `식`을 넣을 수 있기 때문에 더 간결하게 코드를 작성할 수 있다.**       
 
-## 
-   
+## 인자 없는 when 사용    
+```kt
+fun mix(c1: Color, c2: Color) = when(setOf(c1, c2)) {
+    setOf(RED, YELLOW) -> ORANGE
+    setOf(YELLOW, BLUE) -> GREEN
+    setOf(BLUE, VIOLET) -> INDIGO
+    else -> throw Exception("Dirty color")
+    }
+>>> println(mix(BLUE, YELLOW))
+GREEN
+```  
+위 코드에서 각 분기만 `setOf()`는 호출하면서 불 필요한 Set 인스턴스를 생성한다.      
+**불필요한 가비지 객체가 늘어나는 것을 방지하기 위해서는 어떻게 해야할까? 🤔**    
+인자가 없는 when 식을 사용하면 불필요한 객체 생성을 막을 수 있다.(가독성 떨어짐)       
+     
+```kt
+fun mixOptimized(cl: Color, c2: Color) = when {
+    (C1 == RED && C2 == YELLOW) || (C1 == YELLOW && C2 == RED) => ORANGE     
+    (C1 == YELLOW && C2 == BLUE) || (C1 == BLUE && C2 == YELLOW) => GREEN      
+    (C1 == BLUE && C2 == VIOLET) || (C1 == VIOLET && C2 == BLUE) => INDIGO   
+    
+    else -> throw new Exception("Dirty color")  
+}
+>>> println(mixOptimized(BLUE, YELLOW)
+GREEN
+```
+**when**에 아무 인자도 없으려면 각 분기의 조건이 불리언 결과를 계산하는 식어야 한다.        
+
+
+
+
+
+
+
+
+
+
 
 
     
