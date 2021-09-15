@@ -82,6 +82,12 @@ for (i in 1..size-1) {
 **그렇다면 순서가 없는 `Map`은 어떻게 처리할까? 🤔**    
 
 ```kt
+someMap[key] = data
+println(someMap[key])
+```
+참고로 Map 같은 경우 `get/put` 메서드 대신에 `[]`만으로 할당 호출이 가능하다.    
+     
+```kt
 fun main(args: Array) { 
     val binaryReps = TreeMap() 
     for (c in 'A'..'F') { 
@@ -104,10 +110,10 @@ for ((index, value) in list.withIndex()) {
 }
 ```
 사실 List 같은 경우도 `(index, value)`형태로 값을 추출할 수도 있다.    
+   
+# in으로 컬렉션이나 범위의 원소 검사     
 
-
-출처: https://tourspace.tistory.com/100?category=797357 [투덜이의 리얼 블로그]
-
+ 
 
 
 
