@@ -169,7 +169,7 @@ fun eval(e: Expr): Int {
 
 ```kt
 if(e is Sum) {
-    return eval(e.right) + eval(e.left) // right 랑 left가 스마트 캐스트 대상 + val 이어야함 + 커스텀 접근자 안 됨
+    return eval(e.right) + eval(e.left) // 스마트 캐스트 대상의 프로퍼티는 val 이어야함, 커스텀 접근자 안 됨
 }
 ```
 **`is`로 검사하고 나면 컴파일러가 캐스팅을 수행하면서 이후 부터는 캐스팅된 클래스의 기능을 활용할 수 있다.**     
@@ -203,7 +203,7 @@ fun eval(e: Exper): Int =
 3
 ```  
 if분기에 식이 하나밖에 없다면 중괄호를 생략해도 된다.          
-if분기에 블록을 사용하는 경우 그 불록의 마지막 식이 그 분기의 결과 값이다.   
+if분기에 블록을 사용하는 경우 그 블록의 마지막 식이 그 분기의 결과 값이다.   
 
 ```kt
 fun eval(e: Expr): Int = 
@@ -212,10 +212,37 @@ fun eval(e: Expr): Int =
         is Sum -> eval(e.right) + eval(e.left)        
         else -> throw IllegalArgumentException("Unknown expression")     
     }
+// 자바로 비유하면 switch(객체) instanceOf(클래스타입) 같은 형태이다.        
 ```
-`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.          
-`when` 식을 이용해서 값의 타입(is)에 따라 다른 로직을 실행시킬 수 있다.           
-자바로 비유하면 `switch(객체) instanceOf(클래스타입)` 같은 형태이다.     
+`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.             
+`when` 식을 이용해서 값의 타입(is)에 따라 다른 로직을 실행시킬 수 있다.(캐스팅도 필요없다)                    
+   
+`if` 대신 `when`를 사용해야할 경우는 언제일지는 한번 생각해보자   
+
+## 
+`if`나 `when`의 각 분기에서 수행해야 하는 로직이 복잡해지면 분기 본문에 블록을 사용할 수 있다.     
+블록의 마지막 문장이 블록의 결과가 되며 두 줄 이상의 코드가 실행되어야 할 때 주로 사용한다.   
+
+```kt
+fun evalWithLoggin(e: Expr): Int = 
+    when(e) {
+        is Num -> {
+            println("num: ${e.value}")   
+            e.value
+        }
+        is Sum -> {
+            val left = evalWithLogging(e.left)
+            val right = evalWithLogging(e.right)
+            println("sum: $left + $right")
+            left + right
+        }
+        else -> throw IllegalArgumentException("Unknown expression")
+    }
+```
+
+
+
+
 
 
 
