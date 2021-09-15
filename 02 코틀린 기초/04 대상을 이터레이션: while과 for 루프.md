@@ -110,10 +110,30 @@ for ((index, value) in list.withIndex()) {
 }
 ```
 사실 List 같은 경우도 `(index, value)`형태로 값을 추출할 수도 있다.    
-   
-# in으로 컬렉션이나 범위의 원소 검사     
+    
+# in으로 컬렉션이나 범위의 원소 검사       
+`in` 연산자를 사용해 어떤 값이 범위에 속하는지 알 수 있다.        
+`!in` 연산자를 사용하면 어떤 값이 범위에 속하지 않는지 검사할 수 있다.      
 
- 
+```kt
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z' // 'a' <= c && c <= 'z'로 변환 
+fun isNotDigit(c: Char) = c !in '0'..'9' 
+fun main(args: Array) { 
+    println(isLetter('q')) 
+    println(isNotDigit('x')) 
+}
+>> true
+>> true
+```
+for 안에서 사용되는 `in`은 범위와 변수를 구분짓는 역할이라면          
+일반 `in`은 범위에 값이 존재하는 검사하는 역할이다.(contain)          
+반대로 `!in`은 범위에 값이 존재하지 않는지 검사하는 역할이다.(!contain)         
+
+
+
+
+
+
 
 
 
