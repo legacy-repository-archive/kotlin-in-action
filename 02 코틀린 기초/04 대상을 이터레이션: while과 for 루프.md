@@ -129,6 +129,40 @@ for 안에서 사용되는 `in`은 범위와 변수를 구분짓는 역할이라
 일반 `in`은 범위에 값이 존재하는 검사하는 역할이다.(contain)          
 반대로 `!in`은 범위에 값이 존재하지 않는지 검사하는 역할이다.(!contain)         
 
+```kt
+fun recognize(c: Char) = when (c) {
+    in '0'...'9' -> "It's a digit!"
+    in 'a'...'z', in 'A'..'Z' -> "It's a letter!"
+    else -> "I don't know.."
+}
+fun main() {
+    println(recognize('8'))
+}
+>>> It's a digit!
+```
+`when식`에서 사용하면 범위 내 검사를 보다 깔끔히 처리할 수 있다.    
+
+```kt
+println("Kotlin" in "Java".."Scala") // "Java <= Kotline" && "Kotline" <= "Scala"와 같다.   
+>>> true
+```
+범위는 문자에만 국한되지 않으며 비교가 가능한 클래스라면 그 클래스의 인스턴스 객체를 사용해 범위를 만들 수 있다.         
+객체간의 비교는 `Comparable`을 기준으로 하기에 String 의 비교 같은 경우는 사전순으로 비교를 한다.        
+위 같은 경우도 문자열을 사전순으로 비교하면서 `J`보다 뒤 `S`보다 앞인 `K`가 정상 위치기에 true가 나왔다.  
+
+```kt
+println("Kotlin" in setOf("Java", "Scala"))
+>>> false
+```
+for가 아닌 일반 `in`도 컬렉션에서 사용할 수 있다.    
+앞서 언급했듯이 `contains()`와 같은 기능이기에 컬렉션에서도 사용 가능하다.      
+
+
+
+
+
+
+
 
 
 
