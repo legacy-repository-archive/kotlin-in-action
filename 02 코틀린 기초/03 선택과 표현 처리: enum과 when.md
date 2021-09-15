@@ -209,11 +209,13 @@ if분기에 블록을 사용하는 경우 그 불록의 마지막 식이 그 분
 fun eval(e: Expr): Int = 
     when (e) {       
         is Num -> e.value       
-        is Num -> eval(e.right) + eval(e.left)        
+        is Sum -> eval(e.right) + eval(e.left)        
         else -> throw IllegalArgumentException("Unknown expression")     
     }
 ```
-`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.      
+`when` 식을 앞에서 살펴본 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.          
+`when` 식을 이용해서 값의 타입(is)에 따라 다른 로직을 실행시킬 수 있다.           
+자바로 비유하면 `switch(객체) instanceOf(클래스타입)` 같은 형태이다.     
 
 
 
