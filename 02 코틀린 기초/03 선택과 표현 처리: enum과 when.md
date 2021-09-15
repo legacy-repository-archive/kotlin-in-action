@@ -238,7 +238,33 @@ fun evalWithLoggin(e: Expr): Int =
         }
         else -> throw IllegalArgumentException("Unknown expression")
     }
+    
+>>> println(evalWithLogging(Sum(Sum(Num(1), Num(2)), Num(4))))
+num: 1
+num: 2
+sum: 1 + 2
+num: 4
+sum 3 + 4
+7
 ```
+신기하게 결과값만 메서드를 실행하는게 아니라     
+메서드 안에 있는 각각의 객체들에 대해서 메서드를 수행하고 있는 것을 알 수 있다.   
+
+```kt
+println(evalWithLogging(Num(1)))
+println(evalWithLogging(Num(2)))
+println(evalWithLogging(Sum(1+2)))
+println(evalWithLogging(Num(4)))
+println(evalWithLogging(Sum(3+4)))
+```
+'블록의 마지막 식이 블록의 결과'라는 규칙은 블록이 값을 만들어내야 하는 경우 항상 성립한다.      
+식이 본문인 함수는 블록을 본문으로 가질 수 없고      
+블록이 본문인 함수는 내부에 return 문이 반드시 있어야 한다.    
+
+
+
+
+
 
 
 
