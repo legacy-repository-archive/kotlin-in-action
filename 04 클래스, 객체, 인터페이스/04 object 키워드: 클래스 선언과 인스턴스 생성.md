@@ -37,10 +37,45 @@ fun main() {
     Payroll.calculateSalary()
 }
 ```
-변수와 마찬가지로 객체 선언에 사용한 이름 뒤에 마침표,를 붙이면 객체에 속한 메서드나 프로퍼티에 접근할 수 있다.   
+변수와 마찬가지로 객체 선언에 사용한 이름 뒤에 마침표`.`를 붙이면 객체에 속한 메서드나 프로퍼티에 접근할 수 있다.     
 
+```kt
+object CaseInsensitiveFileComparator : Comparator<File> {
+    override fun compare(o1: File, o2: File): Int {
+        return o1.path.compareTo(o2.path, ignoreCase = true)
+    }
+}
+```
+```kt
+fun main() {
+    println(CaseInsensitiveFileComparator.compare(File("/User"), File("/user")))
+}
+>>> 0
+```
+`객체 선언`도 클래스나 인터페이스를 선언할 수 있다.           
+프레임워크를 사용하기 위해 특정 인터페이스를 구현해야 하는데,        
+그 구현 내부에 다른 상태가 필요하지 않은 경우에 이런 기능이 유용하다.   
 
+```kt
+fun main() {
+    val files = listOf(File("/z"), File("/a"))
+    println(files.sortedWith(CaseInsensitiveFileComparator))
+}
+```
+일반 객체를 사용할 수 있는 곳에서는 항상 싱글턴 객체를 사용할 수 있다.       
+`Comparator`를 인자로 받는 `sortedWith`메서드를 통해 정렬을 진행하고 있다.      
 
+```
+// 싱글턴과 의존 관계  
+싱글턴 패턴과 마찬가지 이유로 대규모 소프트웨어 시스템에서는 객체 선언이 항상 적합하지는 않다.      
+의존관계가 별로 많지 않은 소규모 소프트웨어에서는 싱글턴이나 객체 선언이 유용하지만,                
+시스템을 구현하는 다양한 구성 요소와 상호작용하는 대규모 컴포넌트에는 싱글턴이 적합하지 않다.               
+이유는 객체 생성을 제어할 방법이 없고 생성자 파라미터를 지정할 수 없어서다.          
+  
+생성을 제어할 수 없고 생성자 파라미터를 지정할 수 없으므로        
+단위 테스트를 하거나 소프트웨어 시스템의 설정이 달라질 때 객체를 대체하거나 객체의 의존관계를 바꿀 수 없다.    
+따라서 그런 기능이 필요하다면 자바와 마찬가지로 의존관계 주입 프레임워크(스프릥, 구글 주스)와 코틀린 클래스를 함께 사용해야한다.  
+```
 
 
 
