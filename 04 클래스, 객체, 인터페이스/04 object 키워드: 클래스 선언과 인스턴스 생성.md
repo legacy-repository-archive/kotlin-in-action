@@ -77,8 +77,33 @@ fun main() {
 따라서 그런 기능이 필요하다면 자바와 마찬가지로 의존관계 주입 프레임워크(스프릥, 구글 주스)와 코틀린 클래스를 함께 사용해야한다.  
 ```
 
+클래스 안에서도 객체 선언을 할 수 있다.  
 
+```kt
+data class Person(val name: String) {
+    object NameComparator : Comparator<Person> {
+        override fun compare(o1: Person, o2: Person): Int = o1.name.compareTo(o2.name)
+    }
+}
+fun main() {
+    val persons = listOf(Person("Bob"), Person("Alice"))
+    println(persons.sortedWith(Person.NameComparator))
+}
+>>> [Person(name=Alice), Person(name=Bob)]
+```
+이와 같이 `캡슐화`에 초점을 맞추어 객체 내부에 싱글턴 객체를 정의할 수 있다.   
 
+```
+// 코틀린 객체를 자바에서 사용하기  
+코틀린 객체 선언은 유일한 인스턴스에 대한 정적인 빌드가 있는 자바 클래스로 컴파일 된다.    
+이 때 인스턴스 필드의 이름은 항상 INSTANCE다.       
+싱글턴 패턴을 자바에서 구현해도 비슷한 필드가 필요하다.    
+자바 코드에서 코틀린 싱글턴 객체를 사용하려면 정적인 INSTANCE 필드를 통하면 된다.   
+
+CaseInsensitiveFileComparator.INSTANCE.compare(file1, file2);
+
+이 예제에서 INSTANCE 필드의 타입은 CaseInsensitiveFileComparator 다.   
+```
 
 # 동반 객체  
 # 객체 식 
