@@ -210,9 +210,72 @@ interface JSONFactory<T> {
 
 class Person(val name: String) {
     companion object : JSONFactory<Person> {
-        override fun fromJSON(jsonText: String) = Person("test")
+        override fun fromJSON(jsonText: String) = Person("fromJSON")
     }
 }
 ```
+
 JSON 역직렬화하는 구문을 인터페이스로 분리했고 동반 객체에서 이를 구현하는 방식으로 정의했다.   
-이제 JSON으로부터 다시 원소를 만들어내는 추상 팩토리가 있다면 Person 객체를 그 팩토리에 넘길 수 있다.  
+
+```kt
+interface JSONFactory2<T> {
+    fun loadFromJSON(factory: JSONFactory<T>): T
+}
+
+class SampleClass {
+    companion object : JSONFactory2<Person> {
+        override fun loadFromJSON(factory: JSONFactory<Person>) = Person("loadFromJSON")
+    }
+}
+
+fun main() {
+    SampleClass.loadFromJSON(Person)
+}
+```
+JSON으로부터 다시 원소를 만들어내는 추상 팩토리가 있다면 Person 객체를 그 팩토리에 넘길 수 있다.    
+즉, 여기서 동반 객체가 구현한 JSONFactory 인스턴스를 넘길때, 외부 클래스인 Person 이름 자체를 넘겨도 된다.(객체 아님)    
+
+```
+// 코틀린 동반 객체와 정적 멤버  
+
+클래스의 동반 객체는 일반 객체와 비슷한 방식으로, 클래스에 정의된 인스턴스를 가리키는 정적 필드로 컴파일 된다.   
+동반 객체에 이름을 붙이지 않았다면 자바쪽에서 Companion이라는 이름으로 그 참조에 접근할 수 있다.   
+
+/* 자바 */
+Person.Companion.fromJSON("...");
+
+동반 객체에게 이름을 붙였다면 Companion 대신 그 이름이 사용된다.   
+때로 자바에서 사용하기 위해 코틀린 클래스의 멤버를 정적인 멤버로 만들어야 할 필요가 있다.   
+그런 경우 @JvmStatic 어노테이션을 코틀린 멤버에 붙이면 된다.   
+정적 필드가 필요하다면 @JvmField 어노테이션을 최상위 프로퍼티나 객체에서 선언된 프로퍼티 앞에 붙인다.   
+이 기능은 자바와의 상호 운용성을 위해 존재하며, 정확히 말하자면 코틀린 핵심 언어가 제공하는 기능은 아니다.   
+   
+코틀린에서도 자바의 정적 필드나 메서드를 사용할 수 있다.     
+그런 경우 자바와 똑같은 구문을 사용한다.     
+```
+ 
+## 동반 객체 확장   
+자바의 정적 메서드나 코틀린의 동반 객체 메서드처럼       
+기존 클래스에 대해 호출할 수있는 새로운 함수를 정의하고 싶으면 어떻게 할까?       
+클래스에 동반 객체가 있다면 그 객체 안에 함수를 정의함으로써 클래스에 대해 호출할 수 있는 확장 함수를 만들 수 있다.     
+
+```kt
+data class Person(val firstName: String, val lastName: String) {
+    companion object {
+    }
+}
+
+fun Person.Companion.fromJSON(json: String) = Person("$json 파라미터로 받은 확장 함수", " 된다.")
+
+fun main() {
+    val fromJSON = Person.fromJSON("오호~")
+    println(fromJSON)
+}
+>>> Person(firstName=오호~ 파라미터로 받은 확장 함수, lastName= 된다.) 
+```
+동반 객체의 이름을 통해 확장함수를 정의할 수 있고,      
+이후에는 외부 클래스의 정적 메서드처럼 외부 클래스로부터 바로 호출이 가능하다.(동반 클래스 함수 같아 보임)   
+단, 동반 객체에 대한 확장함수이므로 빈 동반 클래스라도 정의가 되어있어야 한다.(그래야 Companion 접근 가능)
+
+# 객체 식: 무명 내부 클래스를 다른 방식으로 작성  
+
