@@ -178,5 +178,41 @@ fun main() {
 * 동반 객체 안에 확장 함수와 프로퍼티를 정의할 수 있다.
 
 ```kt
-
+class Person(val name: String) {
+    companion object Loader {
+        fun fromJSON(jsonTest: String) : Person = ...
+    }
+}
+fun main() {
+    val person = Person.Loader.fromJSON("{name: 'Dmitry'}")
+    println(person.name)
+    
+    val person2 = Person.fromJSON("{name: 'Hello'}")
+    println(person2.name)
+}
+>>> Dmitry
+>>> Hello
 ```
+서비스에서 사용하기 위해 객체를 JSON으로 직렬화하거나 역직려화해야한다.      
+직렬화 로직을 동반 객체 안에 넣음으로써 편리성을 증대시킬 수 있다.       
+
+대부분의 경우 클래스 이름을 통해 동반 객체에 속한 멤버를 참조할 수 있으므로 객체의 이름을 짓지 않아도 된다.       
+하지만 필요하다면 동반 객체에도 이름을 붙일 수 있으며, 이름을 짓지 않으면 기본적으로 Companion이 된다.     
+
+## 동반 객체에서 인터페이스 구현  
+다른 객체 선언과 마찬가지로 동반 객체도 인터페이스를 구현할 수 있다.       
+인터페이스를 구현하는 동반 객체를 참조할 때 객체를 둘러싼 클래스의 이름을 바로 사용할 수 있다.   
+
+```kt
+interface JSONFactory<T> {
+    fun fromJSON(jsonText: String) : T
+}
+
+class Person(val name: String) {
+    companion object : JSONFactory<Person> {
+        override fun fromJSON(jsonText: String) = Person("test")
+    }
+}
+```
+JSON 역직렬화하는 구문을 인터페이스로 분리했고 동반 객체에서 이를 구현하는 방식으로 정의했다.   
+이제 JSON으로부터 다시 원소를 만들어내는 추상 팩토리가 있다면 Person 객체를 그 팩토리에 넘길 수 있다.  
