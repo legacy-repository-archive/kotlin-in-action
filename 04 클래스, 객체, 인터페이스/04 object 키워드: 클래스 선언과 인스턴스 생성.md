@@ -105,5 +105,78 @@ CaseInsensitiveFileComparator.INSTANCE.compare(file1, file2);
 이 예제에서 INSTANCE 필드의 타입은 CaseInsensitiveFileComparator 다.   
 ```
 
-# 동반 객체  
-# 객체 식 
+# 동반 객체    
+코틀린 클래스 안에는 정적인 멤버가 없다.     
+코틀린 언어는 자바 static 키워드를 지원하지 않는다.      
+그 대신, 코틀린에서는 패키지 수준의 `최상위 함수`와 `객체 선언`을 활용한다.     
+    
+대부분의 경우 최상위 함수를 호출하는 편을 권장하지만,            
+**최상위 함수 같은 경우 `private` 접근자로 지정된 멤버에는 접근할 수 없다.**          
+그래서 클래스의 인스턴스와 관계없이 호출해야 하지만, 클래스 내부 정보에 접근해야 하는 함수가 필요할 때는      
+클래스에 중첩된 객체 선언의 멤버 함수로 정의해야한다.(팩토리 메서드에서 유용하게 사용될 것이다.)    
+
+```kt
+class A {
+    companion object {
+        const val HELLO_WORLD = "HelloWorld"
+        fun bar() = println("Companion object called")
+    }
+}
+fun main() {
+    println(A.HELLO_WORLD)
+    A.bar()
+}
+>>> "HelloWorld"
+>>> "Companion object called"
+```
+클래스 안에 정의된 객체 중 하나에 companion이라는 특별한 표시를 붙이면 그 클래스의 동반 객체로 만들 수 있다.     
+동반 객체의 프로퍼티나 메서드에 접근하려면 그 동반 객체가 정의된 클래스(상위 클래스) 이름을 사용한다.       
+객체를 인스턴스화 하지 않아도 접근이 가능하다는 이야기이고, 정적 메서드 호출이나 정적 필드 사용 구문과 같아진다.  
+       
+동반 객체는 상위 클래스의 private 멤버를 호출할 수 있다.      
+이는 곧, 상위 클래스의 private 생성자를 호출하기 좋다는 의미기도 하다.       
+따라서 동반 객체는 팩토리 패턴을 구현하기 가장 적합한 위치이다.     
+
+```kt
+class User {
+    val nickname: String
+    constructor(email: String) {
+        nickname = email.substringBefore('@')
+    }
+    
+    constructor(facebookAccountId: Int) {
+        nickname = getFacebookName(facebookAccountId)
+    }
+}
+```
+부생성자 2개를 가진 클래스이다.         
+이 클래스를 팩토리 메서드로 만들면 아래와 같은 형태를 가질 수 있다.      
+  
+```
+class User private constructor(val nickname: String){
+    companion object {
+        fun newSubscribingUser(email: String) = User(email.substringBefore('@')) 
+        fun newFaceBookUser(accountId: Int) = User(getFaceBookName(accountId))
+    }
+}
+fun main() {
+    val newFaceBookUser = User.newFaceBookUser(1)
+    println(newFaceBookUser.nickname)
+
+    val newSubscribingUser = User.newSubscribingUser("kwj1270@naver.com")
+    println(newSubscribingUser.nickname)
+}
+>>> facebook
+>>> kwj1270
+```
+
+# 동반 객체를 일반 객체처럼 사용      
+동반 객체는 클래스 안에 정의된 일반 객체다.    
+
+* 동반 객체에 이름을 붙일 수 있다.  
+* 동반 객체가 인터페이스를 구현할 수 있다.   
+* 동반 객체 안에 확장 함수와 프로퍼티를 정의할 수 있다.
+
+```kt
+
+```
