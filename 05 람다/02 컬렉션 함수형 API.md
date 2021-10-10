@@ -70,7 +70,19 @@ println(numbers.mapValues { it.value.toUpperCase() })
 Map의 경우 filterKeys()와 mapKeys()를 통해 키값을 걸러내거나 변환하고,      
 filterValues()와 mapValues()를 통해 값을 걸러 내거나 변환한다.          
 
-# all, any count, find: 컬렉션에 술어 적용   
+# all, any count, find: 컬렉션에 술어 적용     
+* all : 컬렉션의 모든 요소들이 조건을 만족하는지 판단하다.      
+* any : 컬렉션의 어느 하나 요소라도 조건을 만족하는지 판단한다.         
+* count : 조건을 만족하는 컬렉션 원소를 반환한다.      
+* find : 조건을 만족하는 첫번째 원소를 반환한다.   
+   
+```kt  
+val canBeInClub27 = { p:Person -> p.age <= 27 }
+val people = listOf(Person("Alice", 27), Person("Bob", 31))
+println(people.all(canBeInClub27)
+>>> false
+```
+모든 원소가 이 술어를 만족하는지 궁금하다면 all 함수를 쓴다.  
 
 
 
