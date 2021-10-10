@@ -178,26 +178,13 @@ val books = listOf(Book("Thursday Next", listOf("Jasper Fforde")),
 println(books.flatMap { it.authors }.toSet())
 >>> [Jasper, Fforde, Terry Pratchett, Neil Gaiman]
 ```
+책을 여러 작가가 함께 쓸 수 있기에 `it.authors`는 여러 작가를 담을 수 있는 컬렉션이다.             
+`flatMap()`함수는 모든 책의 작가를 평평한 리스트 하나로 모은다.              
+`toSet()`함수는 `flatMap()`의 결과 리스트에서 중복을 없애고 집합을 만든다.     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+리스트의 리스트가 있는데, 모든 중첩된 리스트의 원소를 한 리스트로 모아야한다면, `flatMap()`을 사용하면 된다.     
+하지만 **특별히 변환해야 할 내용이 없다면 리스트의 리스트를 평평하게 펼치기만 하면 된다.**         
+그런 경우 `listOfLists.flatten()`처럼 flatten 함수를 사용하면 된다.          
+`flatMap()`은 flatten()에 더불어 추가로 변환해야할 작업이 있을 경우 사용하면 좋다.      
 
 
