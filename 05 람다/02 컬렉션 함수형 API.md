@@ -84,6 +84,38 @@ println(people.all(canBeInClub27)
 ```
 모든 원소가 이 술어를 만족하는지 궁금하다면 all 함수를 쓴다.  
 
+```kt
+val canBeInClub27 = { p:Person -> p.age <= 27 }
+val people = listOf(Person("Alice", 27), Person("Bob", 31))
+println(people.any(canBeInClub27)
+>>> true
+```
+술어를 만족하는 어느 한 원소라도 존재하는지 궁금하다면 any 함수를 쓴다.    
+
+```kt
+val list = listOf(1, 2, 3)     
+println(!list.all { it == 3 })   
+>>> true
+println(list.any { it != 3 })
+>>> true
+```
+`!all()`는 모든 조건을 만족하지 않는지에 대해서 검사한다.      
+참고로 any() 에서 '부정 조건'을 사용했을 때와 결과가 같다.            
+다만, 가독성을 높이려면 any와 all 앞에 !를 붙이지 않는 편이 낫다.     
+
+```kt
+val people = listOf(Person("Alice", 27), Person("Bob" ,31))
+println(people.count(canBeInClub27))
+>>> 1
+```
+
+술어를 만족하는 원소의 개수를 구하려면 count를 사용한다.    
+
+```kt
+println(people.filter(canBeInClub27).size)
+```
+
+
 
 
 
