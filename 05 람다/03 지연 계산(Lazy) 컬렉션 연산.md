@@ -134,6 +134,33 @@ println(people.asSequence().filter { it.length < 4 }.map(Person::name).toList())
 
 # 시퀀스 만들기 
 
+시퀀스를 만드는 다른 방법으로 `generateSequence()`함수를 사용할 수 있다.    
+이 함수는 이전의 원소를 인자로 받아 다음 원소를 계산한다.       
+
+```kt
+// 0 부터 100까지의 자연수를 더하는 프로그램   
+val naturalNumbers = generateSequence(0) { it + 1 } // 현재값보다 1 큰 값을 리턴한다. 
+val numbersTo100 = naturalNumbers.takeWhile { it <= 100 }
+println(numbersTo100.sum())
+>>> 5050
+```
+`naturalNumbers`와 `numbersTo100` 모두 시퀀스며, 연산을 지연 계산한다.    
+최종 연산을 수행하기 전까지는 시퀀스의 각 숫자는 계산되지 않는다.   
+    
+시퀀스를 사용하는 일반적인 용례 중 하나는 객체의 조상으로 이뤄진 시퀀스를 만들어내는 것이다.     
+어떤 객체의 조상이 자신과 같은 타입이고, 모든 조상의 시퀀스에서 어떤 특성을 알고 싶을 때가 있다.   
+
+```kt
+// 페런트 파일 꺼내옴 -> 숨겨져있는거 있으면
+fun File.isInsideHiddenDirectory() = generateSequence(this) { it.parentFile } .any { it.isHidden }
+var file = File("/Users/svtk/.HiddenDir/a.txt")
+println(file.isInsideHiddenDirectory())
+>>> true
+```
+어떤 파일의 상위 디렉터리를 뒤지면서    
+숨김 속성을 가진 디렉터리가 있는지 검사함으로써      
+파일이 감춰진 디렉터리 안에 들어있는지 알아본다.       
+
 
 
      
