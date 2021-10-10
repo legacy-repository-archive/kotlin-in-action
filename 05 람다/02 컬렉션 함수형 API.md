@@ -130,6 +130,53 @@ println(people.find(canBeInClub27))
    
 # groupBy: 리스트를 여러 그룹으로 이뤄진 맵으로 변경      
 
+컬렉션의 모든 원소를 어떤 특성에 따라 여러 그룹으로 나누고 싶다고 가정하자.(원소들을 그룹핑한다.)          
+조건을 파라미터로 전달하면 컬렉션을 자동으로 구분해주는 함수가 있으면 편리할 텐데 groupBy()가 이 역할을 한다.          
+
+```kt
+val people = listOf(Person("Alice", 31), ... , Person("Bob", 29), Person("Carol", 31))
+println(people.groupBy { it.age })   
+>>> 29=[Person(name=Bob, age=29)],
+>>> 31=[Person(name=Alice, age=31), Person(name=Carol, age=31)]
+```  
+연산의 결과로, 원소를 구분하는 **특성이 키**가 되고 **키 값에 따른 각 값**으로 이루어진 **Map이다.**   
+각 그룹은 리스트다. 따라서 groupBy의 결과 타입은 `Map<Int, List<Person>>` 이다.      
+필요하면 이 맵을 `mapKey()`나 `mapValues()` 등을 사용해서 변경할 수 있다.       
+
+```kt
+val list = listOf("a", "ab", "b")
+println(list.groupBy(String::first))
+>>> {a=[a, ab], b=[b]}
+```
+`first()`는 String의 확장 함수이지만, 여전히 멤버참조를 사용해 first에 접근할 수 있다.     
+      
+# flatMap과 flatten: 중첩된 컬렉션 안의 원소 처리        
+```kt
+class Book(val title: String, val authors: List<String>)
+```
+Book으로 표현한 책에 대한 정보를 저장하는 도서관이 있다고 가정하자   
+   
+```kt  
+books.flatMap { it.authors }.toSet() // books 컬렉션에 있는 책을 쓴 모든 저자의 집합, 해당 요소만 빼서 컬렉션 만드는 듯
+```  
+flatMap() 함수는 먼저 인자로 주어진 람다를 컬렉션의 모든 객체에 적용하고          
+람다를 적용한 결과로 얻어지는 여러 리스트를 한 리스트로 한 대 모은다.          
+
+```kt
+val strings = listOf("abc", "def")
+println(Strings.flatMap { it.toList() })    
+>>> [a, b, c, d, e, f]   
+```   
+
+
+
+
+
+
+
+
+
+
 
 
 
