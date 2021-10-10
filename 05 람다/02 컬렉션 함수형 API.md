@@ -123,7 +123,14 @@ val people = listOf(Person("Alice", 27), Person("Bob", 31))
 println(people.find(canBeInClub27))
 >>> Person(name=Alice, age=27)
 ```
-술어를 만족하는 원소를 하나 찾고 싶으면 find 함수를 사용하면 된다.     
+술어를 만족하는 원소를 하나 찾고 싶으면 find 함수를 사용하면 된다.      
+이 식은 조건을 만족하는 원소가 하나라도 있는 경우 가장 먼저 조건을 만족한다고 확인된 원소를 반환한다.       
+만족하는 원소가 전혀 없는 경우 null 을 반환한다. (find()는 firstOrNull과 같다.)     
+보다 명확하게 표현하고 싶다면 `firstOrNull()` 을 쓰면 된다.      
+   
+# groupBy: 리스트를 여러 그룹으로 이뤄진 맵으로 변경      
+
+
 
 
 
