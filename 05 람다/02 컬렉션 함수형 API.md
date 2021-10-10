@@ -114,6 +114,16 @@ println(people.count(canBeInClub27))
 ```kt
 println(people.filter(canBeInClub27).size)
 ```
+간혹 size를 사용하는 경우가 있는데   
+size를 사용할 경우, 조건을 만족하는 모든 원소가 들어가는 중간 컬렉션이 생긴다.(원소 여부 판단)      
+count는 개수만을 추적하지, 조건을 만족하는 원소를 따로 저장하지 않으므로 훨씬 효율적이다.        
+
+```kt
+val people = listOf(Person("Alice", 27), Person("Bob", 31))
+println(people.find(canBeInClub27))
+>>> Person(name=Alice, age=27)
+```
+술어를 만족하는 원소를 하나 찾고 싶으면 find 함수를 사용하면 된다.     
 
 
 
