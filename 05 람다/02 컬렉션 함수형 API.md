@@ -164,9 +164,21 @@ flatMap() 함수는 먼저 인자로 주어진 람다를 컬렉션의 모든 객
 
 ```kt
 val strings = listOf("abc", "def")
-println(Strings.flatMap { it.toList() })    
+println(Strings.flatMap { it.toList() }) // toList로 원소 하나하나를 리스트로 쪼갬 -> 이걸 다시 flatMap으로 한데 뭉침 
 >>> [a, b, c, d, e, f]   
 ```   
+`toList()` 함수를 문자열에 적용하면, 그 문자열에 속한 모든 문자로 이뤄진 리스트가 만들어진다.         
+`map()`과 `toList()`를 함께 사용하면, 표현한 것처럼 문자로 이뤄진 리스트로 이뤄진 리스트가 생긴다.       
+`flatMap()`함수는 다음 단계로 리스트의 리스트에 들어있던 모든 원소로 이뤄진 단일 리스트를 반환한다.     
+
+```kt
+val books = listOf(Book("Thursday Next", listOf("Jasper Fforde")),
+                   Book("Nort", listOf("Terry Pratchett")),
+                   Book("Good Omens", listOf("Terry Pratchett", "Neil Gaiman")))
+println(books.flatMap { it.authors }.toSet())
+>>> [Jasper, Fforde, Terry Pratchett, Neil Gaiman]
+```
+
 
 
 
