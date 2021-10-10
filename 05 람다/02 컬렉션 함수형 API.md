@@ -47,20 +47,30 @@ println(people.map(Person:name))
 people.filter { it.gae > 30 }.map(Person::name)
 ```
 filter와 같이 연쇄시켜서 작성할 수도 있다.    
-
+   
 ```kt
 people.filter { it.age == people.maxBy(Person::age) !!.age }    
 ```
-
-
+나이의 최댓값을 구하고 나이가 그 최댓값과 같은 모든 사람을 반환하는 코드다.    
+그러나 100명의 사림이 있다면 100번 최댓값을 구하는 연산이 실행되느 아래와 같이 개선한다.       
+        
 ```kt    
-val maxAge = people.filter { it.age == people.maxBy(Person::age) !!.age }    
+val maxAge = people.maxBy(Person::age) !!.age        
 people.filter { it.age == maxAge }
 ```     
+즉, filter 안에서 호출하면 이를 지속적으로 수행하는 것이므로,        
+이를 따로 분리 시켜서 동작하는 형태로 하자.(복잡도가 엄청 감소되었을 것이다)         
 
 
+```kt
+val numbers = mapOf(0 to "zero", 1 to "one")      
+println(numbers.mapValues { it.value.toUpperCase() })    
+>>> {0=ZERO, 1=ONE}
+```
+Map의 경우 filterKeys()와 mapKeys()를 통해 키값을 걸러내거나 변환하고,      
+filterValues()와 mapValues()를 통해 값을 걸러 내거나 변환한다.          
 
- 
+# all, any count, find: 컬렉션에 술어 적용   
 
 
 
