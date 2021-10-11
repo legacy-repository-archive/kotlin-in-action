@@ -98,6 +98,43 @@ with()가 반환하는 값은 람다 코드를 실행한 결과이며, 그 결�
 
 # apply 함수   
 
+`apply()` 함수는 거의 `with()`와 같으며 유일한 차이란 `apply()`는 항상 자신에게 전달된 수신 객체를 반환한다.   
+
+```kr
+fun alphabet() = apply(StringBuilder()) {
+    for (letter in 'A'.. 'Z') {
+        append(letter)                      // this를 명시해서 수신 객체의 메서드를 호출한다.
+    }
+    append("\nNow I know the alphabet!")    // this 생략도 가능하다.
+}.toString()                                // 람다에서 값을 반환한다.   
+```
+`apply()`는 확장 함수로 정의되어 있다.       
+`apply()`의 수신 객체가 전달 받은 람다의 수신 객체가 된다.        
+
+이런 `apply()`함수는 객체의 인스턴스를 만들면서 즉시 프로퍼티 중 일부를 초기화해야하는 경우에 유용하다.    
+자바에서는 보통 별도의 `Builder` 객체가 이런 역할을 담당하지만,    
+코틀린에서는 어떤 클래스가 정의되어 있는 라이브러리의 특별한 지원 없이도      
+그 클래스 인스턴스에 대해 `apply()` 할 수 있다.        
+
+```kt
+fun createViewWithCustomAttributes(context: Context) = 
+    TextView(context).apply {
+        text = "Sample Text"
+        textSize = 20.0
+        setPadding(10, 0, 0, 0)
+    }
+```
+`apply()`를 객체 초기화에 활용하는 예시는 위와 같다.     
+`apply()`를 이용하면 함수의 본문에 간격한 식을 사용할 수 있다.(빌더 대신 쓰자)      
+  
+
+
+
+
+
+
+
+
 
 
 
