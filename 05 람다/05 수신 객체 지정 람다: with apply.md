@@ -69,7 +69,7 @@ this가 함수의 수신 객체를 가리키는 비슷한 개념을 떠올린 �
 
 이전 코드를 더욱 리팩토링하면 아래와 같다.   
 
-```kr
+```kt
 fun alphabet() = with(StringBuilder()) {
     for (letter in 'A'.. 'Z') {
         append(letter)                 // this를 명시해서 수신 객체의 메서드를 호출한다.
@@ -100,7 +100,7 @@ with()가 반환하는 값은 람다 코드를 실행한 결과이며, 그 결�
 
 `apply()` 함수는 거의 `with()`와 같으며 유일한 차이란 `apply()`는 항상 자신에게 전달된 수신 객체를 반환한다.   
 
-```kr
+```kt
 fun alphabet() = apply(StringBuilder()) {
     for (letter in 'A'.. 'Z') {
         append(letter)                      // this를 명시해서 수신 객체의 메서드를 호출한다.
@@ -126,7 +126,22 @@ fun createViewWithCustomAttributes(context: Context) =
 ```
 `apply()`를 객체 초기화에 활용하는 예시는 위와 같다.     
 `apply()`를 이용하면 함수의 본문에 간격한 식을 사용할 수 있다.(빌더 대신 쓰자)      
-  
+
+```kt
+fun alphabet() = buildString {
+    for (letter in 'A'.. 'Z') {
+        append(letter)                      // this를 명시해서 수신 객체의 메서드를 호출한다.
+    }
+    append("\nNow I know the alphabet!")    // this 생략도 가능하다.
+}.toString()                                // 람다에서 값을 반환한다.   
+```
+`with()`와 `apply()`는 수신 객체 지정 람다를 사용하는 일반적인 예시 중 하나다.    
+더 구체적인 함수를 비슷한 패턴으로 활용할 수 있다.       
+`buildString()`은 StringBuilder 객체를 만들고 toString() 하는 역할을 알아서 해준다.      
+`buildString()`은 수신 객체 지정 람다이며, 수신 객체는 항상 StringBuilder 가 된다.       
+
+수신 객체 지정 람다는 이후 코틀린 DSL에서 유용하게 쓰일테니 잘 정리하자  
+
 
 
 
